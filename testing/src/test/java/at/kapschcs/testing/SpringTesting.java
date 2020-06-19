@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.rmi.UnmarshalException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,9 @@ public class SpringTesting extends AbstractBaseTest {
 
 	@Autowired
 	private ApplicationContext ctx;
+	
+	@Autowired
+	private XmlTransformationService transformationService;
 
 	@Test
 	public void dataBinderTest() {
@@ -83,7 +87,7 @@ public class SpringTesting extends AbstractBaseTest {
 	}
 
 	@Test
-	public void testLookupAndInvokeSuccess() {
+	public void testLookupAndInvoke() {
 		String serviceName = StringUtils.uncapitalize(req.getService());
 		String methodName = req.getMethod();
 
@@ -97,6 +101,38 @@ public class SpringTesting extends AbstractBaseTest {
 		
 		System.out.println(resp);
 
+	}
+	
+	@Test
+	public void testLookupAndInvokeAndXml() {
+		String serviceName = StringUtils.uncapitalize(req.getService());
+		String methodName = req.getMethod();
+
+		TestService serviceClass = getService(serviceName);
+		assertTrue(serviceClass!=null, "Service not found with name " + serviceName);
+		Method method = getMethod(methodName, serviceClass);
+		assertTrue(method!=null, "Method not found with name " + methodName);
+
+		TestResponse resp = invoke(serviceClass, method, req);
+		assertNotNull(resp, "No response from service invocation");
+		
+		try {
+		String respXml = transformationService.toXml(resp);
+		assertTrue(respXml!=null, "Response not transformed");
+		
+		System.out.println(respXml);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testService() {
+		TestResponse resp = testService.testMethod(req);
+		assertNotNull(resp, "Response is null");
+		
+		System.out.println(resp);
 	}
 	
 	
@@ -121,17 +157,18 @@ public class SpringTesting extends AbstractBaseTest {
 		MethodInvoker invoker = new MethodInvoker();
 		invoker.setTargetClass(service.getClass());
 		invoker.setTargetMethod(method.getName());
-		invoker.setTargetObject(req);
+		invoker.setTargetObject(service);
+		invoker.setArguments(req);
 		
 
-		TestResponse resp;
+		TestResponse resp = new TestResponse();
 
 		try {
 			invoker.prepare();
 			return (TestResponse) invoker.invoke();
 		} catch (ClassNotFoundException| NoSuchMethodException| InvocationTargetException | IllegalAccessException ex) {
-			resp = new TestResponse(req);
-			resp.setStatus(ex.getMessage());
+			ex.printStackTrace();
+			resp.setStatus("ERROR");
 		}
 
 		return resp;
