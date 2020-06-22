@@ -40,8 +40,8 @@ public class TestRequest extends AbstractMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TestRequest [firstName=" + firstName + ", lastName=" + lastName + ", getId()=" + getId()
-				+ ", getService()=" + getService() + ", getMethod()=" + getMethod() + "]";
+		return "TestRequest [firstName=" + firstName + ", lastName=" + lastName + ", id=" + getId() + ", service="
+				+ getService() + ", method=" + getMethod() + "]";
 	}
 
 }

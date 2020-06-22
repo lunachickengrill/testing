@@ -3,15 +3,13 @@ package at.kapschcs.testing;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 import at.kapschcs.testing.messages.TestRequest;
 
 
-class JaxbTesting extends AbstractBaseTest{
+public class JaxbTesting extends AbstractBaseTest{
 	
 	public static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
 			"<ns2:testRequest xmlns:ns2=\"at.kapschcs\">\n" + 
@@ -29,14 +27,10 @@ class JaxbTesting extends AbstractBaseTest{
 	ApplicationContext ctx;
 
 	@Test
-	void contextLoads() {
-	}
-	
-	@Test
 	public void testContext() {
+		
 		assertTrue(ctx.containsBean("marshaller"));
-		
-		
+		assertTrue(ctx.containsBean("unmarshaller"));	
 	}
 	
 	@Test
@@ -58,6 +52,7 @@ class JaxbTesting extends AbstractBaseTest{
 	
 	@Test
 	public void testUnmashaller() {
+		
 		try {
 		TestRequest req = transformationService.fromXml(XML);
 		System.out.println(req.toString());

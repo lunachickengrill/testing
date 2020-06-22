@@ -1,12 +1,9 @@
 package at.kapschcs.testing;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Service;
 import org.springframework.xml.transform.StringResult;
 import org.springframework.xml.transform.StringSource;
@@ -32,7 +29,7 @@ public class XmlTransformationServiceImpl implements XmlTransformationService {
 
 	@Override
 	public String toXml(Object obj) throws Exception{
-		System.out.println("toXml");
+		System.out.println("toXml" + "\n");
 		StringResult result = new StringResult();
 		marshaller.marshal(obj, result);
 		return result.toString();
@@ -41,7 +38,7 @@ public class XmlTransformationServiceImpl implements XmlTransformationService {
 
 	@Override
 	public TestRequest fromXml(String xml) throws Exception {
-		System.out.println("fromXml");
+		System.out.println("fromXml" + "\n");
 		
 		StringSource src = new StringSource(xml);
 		return (TestRequest) unmarshaller.unmarshal(src);

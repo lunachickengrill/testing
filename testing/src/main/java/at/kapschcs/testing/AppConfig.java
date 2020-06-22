@@ -3,8 +3,6 @@ package at.kapschcs.testing;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.processing.Processor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
