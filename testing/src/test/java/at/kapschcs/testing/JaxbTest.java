@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import at.kapschcs.testing.messages.TestRequest;
 
 
-public class JaxbTesting extends AbstractBaseTest{
+public class JaxbTest extends AbstractBaseTest{
 	
 	public static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" + 
 			"<ns2:testRequest xmlns:ns2=\"at.kapschcs\">\n" + 

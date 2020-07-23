@@ -1,0 +1,12 @@
+{
+   "requestId":"12345",
+   "requestService":"basicCustomerService",
+   "requestMethod":"createCustomer",
+   "params":{
+      "customerId":"123456",
+      "firstName":"Tom",
+      "lastName":"Turbo",
+      "emailAddress":"emailAdress",
+      "password":"password"
+   }
+}

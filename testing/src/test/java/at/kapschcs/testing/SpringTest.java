@@ -22,7 +22,7 @@ import org.springframework.validation.DataBinder;
 import at.kapschcs.testing.messages.TestRequest;
 import at.kapschcs.testing.messages.TestResponse;
 
-public class SpringTesting extends AbstractBaseTest {
+public class SpringTest extends AbstractBaseTest {
 
 	private static TestRequest req = new TestRequest();
 	private static Map<String, String> params = new HashMap<>();
